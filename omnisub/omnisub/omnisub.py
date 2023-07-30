@@ -31,7 +31,11 @@ def omnisub(directory: Path, search: str, replace: str) -> None:
             directories.append(path)
 
     for file in files:
-        file_content = file.read_text()
+        try:
+            file_content = file.read_text()
+        except UnicodeDecodeError:
+            logger.info(f"Could not decode {file}")
+            continue
         file_content = file_content.replace(search, replace)
         file.write_text(file_content)
 
