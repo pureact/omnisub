@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from omnisub.omnisub.omnisub.omnisub import omnisub
+from omnisub.omnisub import omnisub
 
 
 def test_omnisub() -> None:
@@ -16,7 +16,12 @@ def test_omnisub() -> None:
     test_subdirectory = Path("test_directory_%module%/%module%")
     test_subdirectory.mkdir()
 
-    omnisub(test_directory, "%module%", "success")
+    # Write a file that will raise a UnicodeDecodeError when read_text is called
+    Path(
+        "test_directory_%module%/UnicodeDecodeError.test",
+    ).write_bytes(b"\x80")
+
+    omnisub.omnisub(test_directory, "%module%", "success")
 
     assert Path("test_directory_success").exists()
     assert Path("test_directory_success/success").exists()
@@ -24,5 +29,6 @@ def test_omnisub() -> None:
     assert Path("test_directory_success/success.test").read_text() == "Test success"
 
     Path("test_directory_success/success.test").unlink()
+    Path("test_directory_success/UnicodeDecodeError.test").unlink()
     Path("test_directory_success/success").rmdir()
     Path("test_directory_success").rmdir()

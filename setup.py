@@ -7,6 +7,6 @@ setup(
     version="1.0",
     description="omnisub",
     author="naek",
-    packages=["omnisub", "omnisub.omnisub"],
+    packages=["omnisub"],
     entry_points={"console_scripts": ["omnisub=omnisub.__main__:main"]},
 )
