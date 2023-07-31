@@ -1,6 +1,7 @@
 """test_omnisub tests functionality of omnisub."""
 
 from pathlib import Path
+import pytest
 
 from omnisub.omnisub import omnisub
 
@@ -27,6 +28,8 @@ def test_omnisub() -> None:
     assert Path("test_directory_success/success").exists()
     assert Path("test_directory_success/success.test").exists()
     assert Path("test_directory_success/success.test").read_text() == "Test success"
+    with pytest.raises(UnicodeDecodeError):
+        omnisub.omnisub_file(Path("test_directory_success/UnicodeDecodeError.test").read_text(), "%module%", "success")  # type: ignore [reportGeneralTypeIssues]
 
     Path("test_directory_success/success.test").unlink()
     Path("test_directory_success/UnicodeDecodeError.test").unlink()
