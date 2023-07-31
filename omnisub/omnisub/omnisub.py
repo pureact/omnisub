@@ -83,12 +83,12 @@ def get_directory_contents(directory: Path) -> tuple[list[Path], list[Path]]:
     return directories, files
 
 
-def omnisub(directory: Path, search: str, replace: str, top: bool = True) -> None:
+def omnisub(root_directory: Path, search: str, replace: str, top: bool = True) -> None:
     """Find and substitute a string in directory names, folder names, file names, and file contents.
 
     Parameters
     ----------
-    directory : Path
+    root_directory : Path
         The directory to omnisub.
 
     search : str
@@ -103,7 +103,7 @@ def omnisub(directory: Path, search: str, replace: str, top: bool = True) -> Non
     files: list[Path] = []
     directories: list[Path] = []
 
-    directories, files = get_directory_contents(directory)
+    directories, files = get_directory_contents(root_directory)
 
     for file in files:
         omnisub_file(file, search, replace)
@@ -115,4 +115,4 @@ def omnisub(directory: Path, search: str, replace: str, top: bool = True) -> Non
         omnisub_directory(directory, search, replace)
 
     if top:
-        omnisub_directory(directory, search, replace)
+        omnisub_directory(root_directory, search, replace)

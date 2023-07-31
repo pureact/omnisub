@@ -27,6 +27,7 @@ def main() -> None:
     if len(args.args) != REQUIRED_ARGS_LENGTH:
         return
 
+
     omnisub(Path(args.args[0]), args.args[1], args.args[2])
 
 
