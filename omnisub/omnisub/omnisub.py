@@ -1,5 +1,7 @@
 """Omnisub will find and substitute a string in directory names, folder names, file names, and file contents."""
 
+from __future__ import annotations
+
 import logging
 from pathlib import Path, PurePath
 
